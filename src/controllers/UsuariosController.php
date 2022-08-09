@@ -2,6 +2,7 @@
 namespace src\controllers;
 
 use \core\Controller;
+use \src\models\Usuario;
 
 class UsuariosController extends Controller {
 
@@ -9,4 +10,25 @@ class UsuariosController extends Controller {
         $this->render('add');
     }
 
+    public function addAction(){
+        $name = filter_input(INPUT_POST, 'name');
+        $email = filter_input(INPUT_POST, 'email');
+    
+        if($name && $email){
+           $data = Usuario::select()->where('email', $email)->execute();
+
+            if(count($data) === 0){
+                Usuario::insert([
+                    'nome' => $name,
+                    'email' => $email
+                    ])->execute();
+
+                $this->redirect('/');
+            }
+        } else {
+            echo '<script>alert("Não foi inserido")</script>';
+            $this->redirect('/');
+        }
+    
+    }
 }
