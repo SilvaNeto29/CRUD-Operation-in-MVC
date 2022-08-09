@@ -10,13 +10,4 @@ class HomeController extends Controller {
       
         $this->render('home', ['nome' => 'Joao']);
     }
-
-    public function sobre() {
-        $this->render('sobre');
-    }
-
-    public function sobreP($args) {
-        print_r($args);
-    }
-
 }
