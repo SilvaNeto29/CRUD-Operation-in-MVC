@@ -28,7 +28,37 @@ class UsuariosController extends Controller {
         } else {
             echo '<script>alert("Não foi inserido")</script>';
             $this->redirect('/');
+        }  
+    }
+
+    public function edit($args){
+        $usuario = Usuario::select()->where('id', $args['id'])->one();
+
+        $this->render('edit', [
+            'usuario' => $usuario
+        ]);
+    }
+
+    public function editAction($args){
+        $name = filter_input(INPUT_POST, 'name');
+        $email = filter_input(INPUT_POST, 'email');
+
+        if($name && $email){
+            
+            Usuario::update()
+                ->set('nome', $name)
+                ->set('email', $email)
+                ->where('id', $args['id'])
+                ->execute();
+            
+            $this->redirect('/');
         }
-    
+        $this->redirect('/usuario/'.$args)['id'].'/editar';
+    }
+
+    public function del($args){
+        
+        Usuario::delete()->where('id', $args['id'])->execute();
+        $this->redirect('/');
     }
 }
