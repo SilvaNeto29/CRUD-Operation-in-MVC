@@ -2,12 +2,12 @@
 namespace src\controllers;
 
 use \core\Controller;
-
+use \src\models\Usuario;
 class HomeController extends Controller {
 
     public function index() {
-     // $this->render('home');
+        $usuarios = Usuario::select()->execute();    
       
-        $this->render('home', ['nome' => 'Joao']);
+        $this->render('home', ['usuarios' => $usuarios]);
     }
 }
